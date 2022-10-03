@@ -1,25 +1,37 @@
 #include <stdio.h>
 
-template<class T>
-T Min(T a, T b) {
-    if (a <= b) {
-        return a;
-    }
-
-    return b;
+// ˆê”Ê‘ÌŒn
+int General(int hourlyWage, int hours) {
+    return hourlyWage * hours;
 }
 
-template<>
-char Min<char>(char a, char b) {
-    printf("”šˆÈŠO‚Í‘ã“ü‚Å‚«‚Ü‚¹‚ñB");
-    return 0;
+// Ä‹A‘ÌŒn
+int Recursive(int defWage, int hours) {
+    if (hours <= 0) {
+        return 0;
+    }
+
+    return defWage + Recursive(defWage * 2 - 50, hours - 1);
 }
 
 int main(void) {
-    printf("%d\n", Min<int>(100, 200));
-    printf("%f\n", Min<float>(10.2f, 20.8f));
-    printf("%lf\n", Min<double>(10.22f, 20.88f));
-    printf("%c\n", Min<char>('a', 'a'));
+    const int hourlyWage = 1072;    // ˆê”Ê‘ÌŒn‚Ì‹‹
+    const int beginWage = 100;      // Ä‹A‘ÌŒn‚Ì‰Šú’À‹à
+
+    int workTime = 8; // ˜J“­ŠÔ
+
+
+    // ˜J“­ŠÔ•ª‚Ì‹‹—¿”äŠr
+    printf("ˆê”Ê“I‚È’À‹à‘ÌŒn : %d‰~\n", General(hourlyWage, workTime));
+    printf("Ä‹A“I‚È’À‹à‘ÌŒn : %d‰~\n", Recursive(beginWage, workTime));
+
+    // Œ‹˜_
+    if (General(hourlyWage, workTime) >= Recursive(beginWage, workTime)) {
+        printf("‚æ‚Á‚Äˆê”Ê“I‚È’À‹à‘ÌŒn‚Ì•û‚ª’À‹à‚ª‘½‚¢B\n");
+    }
+    else {
+        printf("‚æ‚Á‚ÄÄ‹A“I‚È’À‹à‘ÌŒn‚Ì•û‚ª’À‹à‚ª‘½‚¢B\n");
+    }
 
     return 0;
 }
