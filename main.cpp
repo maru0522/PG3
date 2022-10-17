@@ -1,37 +1,54 @@
 #include <stdio.h>
+#include <Windows.h>
+#include <time.h>
+#include <iostream>
 
-// 一般体系
-int General(int hourlyWage, int hours) {
-    return hourlyWage * hours;
-}
+using PFunc = void (*) (int);
 
-// 再帰体系
-int Recursive(int defWage, int hours) {
-    if (hours <= 0) {
-        return 0;
-    }
+// コールバック関数
+void Callback1(int num) {
+    srand(time(nullptr));
 
-    return defWage + Recursive(defWage * 2 - 50, hours - 1);
-}
+    int randNum{ rand()%6 + 1 };
+    std::cout << "サイコロの値は" << randNum << "でした。" << std::endl;
 
-int main(void) {
-    const int hourlyWage = 1072;    // 一般体系の時給
-    const int beginWage = 100;      // 再帰体系の初期賃金
-
-    int workTime = 8; // 労働時間
-
-
-    // 労働時間分の給料比較
-    printf("一般的な賃金体系 : %d円\n", General(hourlyWage, workTime));
-    printf("再帰的な賃金体系 : %d円\n", Recursive(beginWage, workTime));
-
-    // 結論
-    if (General(hourlyWage, workTime) >= Recursive(beginWage, workTime)) {
-        printf("よって一般的な賃金体系の方が賃金が多い。\n");
+    if (num % 2 == randNum % 2) {
+        std::cout << "あなたの勝ち。" << std::endl;
     }
     else {
-        printf("よって再帰的な賃金体系の方が賃金が多い。\n");
+        std::cout << "あなたの負け。" << std::endl;
     }
+}
+
+void SetTimeout(PFunc p, int second,int num) {
+    std::cout << second << "秒待ってください。" << std::endl;
+    std::cout << "サイコロを振っています。" << std::endl;
+    // 待機
+    Sleep(second * 1000);
+    p(num);
+}
+
+
+int main(void) {
+
+    int num{ 0 };
+
+    std::cout << "偶数/奇数どちらになるか予想し値を入力してください。" << std::endl;
+    std::cout << "偶数なら[0]を、奇数なら[1]を入力してください。" << std::endl;
+
+    std::cin >> num;
+
+    // 0か1を必ず入力させる
+    while (num != 0 && num != 1) {
+        std::cout << "入力された値が不適切です。偶数なら[0]を、奇数なら[1]を入力してください。" << std::endl;
+        std::cin >> num;
+    }
+
+    PFunc p;
+    p = Callback1;
+
+    // 関数ポインタ, 待機時間[s], 予想された値
+    SetTimeout(p, 3, num);
 
     return 0;
 }
