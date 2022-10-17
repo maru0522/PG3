@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <time.h>
 #include <iostream>
+#include <functional>
 
 using PFunc = void (*) (int);
 
@@ -20,23 +21,21 @@ void Callback1(int num) {
     }
 }
 
-void SetTimeout(PFunc p, int second,int num) {
-    std::cout << second << "秒待ってください。" << std::endl;
-    std::cout << "サイコロを振っています。" << std::endl;
-    // 待機
-    Sleep(second * 1000);
-    p(num);
-}
-
-
 int main(void) {
-
     int num{ 0 };
 
     std::cout << "偶数/奇数どちらになるか予想し値を入力してください。" << std::endl;
     std::cout << "偶数なら[0]を、奇数なら[1]を入力してください。" << std::endl;
 
     std::cin >> num;
+
+    std::function<void(PFunc,int)> setTimeout = [=](PFunc p, int second){
+        std::cout << second << "秒待ってください。" << std::endl;
+        std::cout << "サイコロを振っています。" << std::endl;
+        // 待機
+        Sleep(second * 1000);
+        p(num);
+    };
 
     // 0か1を必ず入力させる
     while (num != 0 && num != 1) {
@@ -48,7 +47,7 @@ int main(void) {
     p = Callback1;
 
     // 関数ポインタ, 待機時間[s], 予想された値
-    SetTimeout(p, 3, num);
+    setTimeout(p, 3);
 
     return 0;
 }
