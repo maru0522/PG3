@@ -1,53 +1,45 @@
-#include <stdio.h>
-#include <Windows.h>
-#include <time.h>
+ï»¿#include <stdio.h>
+#include <list>
+#include <vector>
 #include <iostream>
-#include <functional>
+#include <iterator>
 
-using PFunc = void (*) (int);
+int main(void){
 
-// ƒR[ƒ‹ƒoƒbƒNŠÖ”
-void Callback1(int num) {
-    srand(time(nullptr));
+	std::list<const char*> yamanoteLine1970{ 
+		"Tokyo", "Kanda", "Akihabara", "Okachimachi", "Ueno",
+		"Uguisudani", "Nippori", /*"Nishi-Nippori",*/ "Tabata", "Komagome",
+		"Sugamo", "ÅŒtsuka", "Ikebukuro", "Mejiro", "Takadanobaba",
+		"Shin-ÅŒkubo", "Shinjuku", "Yoyogi", "Harajuku", "Shibuya",
+		"Ebisu", "Meguro", "Gotanda", "ÅŒsaki", "Shinagawa",
+		/*"Takanawa-Gateway",*/ "Tamachi", "HamamatsuchÅ", "Shimbashi", "YÅ«rakuchÅ"
+	};
 
-    int randNum{ rand()%6 + 1 };
-    std::cout << "ƒTƒCƒRƒ‚Ì’l‚Í" << randNum << "‚Å‚µ‚½B" << std::endl;
+	auto it_ = yamanoteLine1970.begin();
 
-    if (num % 2 == randNum % 2) {
-        std::cout << "‚ ‚È‚½‚ÌŸ‚¿B" << std::endl;
-    }
-    else {
-        std::cout << "‚ ‚È‚½‚Ì•‰‚¯B" << std::endl;
-    }
-}
+	// 1970å¹´ä»£ã®é§…
+	std::cout << "1970å¹´:" << std::endl;
+	for (auto it = yamanoteLine1970.begin(); it != yamanoteLine1970.end(); it++) {
+		std::cout << *it << std::endl;
+	}
 
-int main(void) {
-    int num{ 0 };
+	// è¥¿æ—¥æš®é‡Œã‚’æŒ¿å…¥
+	yamanoteLine1970.insert(std::next(yamanoteLine1970.begin(),7), "Nishi-Nippori");
 
-    std::cout << "‹ô”/Šï”‚Ç‚¿‚ç‚É‚È‚é‚©—\‘z‚µ’l‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" << std::endl;
-    std::cout << "‹ô”‚È‚ç[0]‚ğAŠï”‚È‚ç[1]‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" << std::endl;
+	// 2020å¹´ä»£ã®é§…
+	std::cout << std::endl << "2020å¹´:" << std::endl;
+	for (auto it = yamanoteLine1970.begin(); it != yamanoteLine1970.end(); it++) {
+		std::cout << *it << std::endl;
+	}
 
-    std::cin >> num;
+	// é«˜è¼ªã‚²ãƒ¼ãƒˆã‚¦ã‚§ã‚¤ã‚’æŒ¿å…¥
+	yamanoteLine1970.insert(std::prev(yamanoteLine1970.end(), 4), "Takanawa-Gateway");
 
-    std::function<void(PFunc,int)> setTimeout = [=](PFunc p, int second){
-        std::cout << second << "•b‘Ò‚Á‚Ä‚­‚¾‚³‚¢B" << std::endl;
-        std::cout << "ƒTƒCƒRƒ‚ğU‚Á‚Ä‚¢‚Ü‚·B" << std::endl;
-        // ‘Ò‹@
-        Sleep(second * 1000);
-        p(num);
-    };
+	// 2022å¹´ä»£ã®é§…
+	std::cout << std::endl << "2022å¹´:" << std::endl;
+	for (auto it = yamanoteLine1970.begin(); it != yamanoteLine1970.end(); it++) {
+		std::cout << *it << std::endl;
+	}
 
-    // 0‚©1‚ğ•K‚¸“ü—Í‚³‚¹‚é
-    while (num != 0 && num != 1) {
-        std::cout << "“ü—Í‚³‚ê‚½’l‚ª•s“KØ‚Å‚·B‹ô”‚È‚ç[0]‚ğAŠï”‚È‚ç[1]‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" << std::endl;
-        std::cin >> num;
-    }
-
-    PFunc p;
-    p = Callback1;
-
-    // ŠÖ”ƒ|ƒCƒ“ƒ^, ‘Ò‹@ŠÔ[s], —\‘z‚³‚ê‚½’l
-    setTimeout(p, 3);
-
-    return 0;
+	return 0;
 }
