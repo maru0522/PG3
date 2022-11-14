@@ -7,7 +7,7 @@
 using PFunc = void (*) (int);
 
 // コールバック関数
-void Callback1(int num) {
+void Dice(int num) {
     srand(time(nullptr));
 
     int randNum{ rand()%6 + 1 };
@@ -44,7 +44,7 @@ int main(void) {
     }
 
     PFunc p;
-    p = Callback1;
+    p = Dice;
 
     // 関数ポインタ, 待機時間[s], 予想された値
     setTimeout(p, 3);
