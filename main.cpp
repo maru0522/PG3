@@ -4,7 +4,7 @@
 #include <iostream>
 #include <functional>
 
-using PFunc = void (*) (int);
+using PFunc = void (*) (int); 
 
 // コールバック関数
 void Dice(int num) {
