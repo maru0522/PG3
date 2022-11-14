@@ -4,8 +4,6 @@
 #include <iostream>
 #include <functional>
 
-using PFunc = void (*) (int); 
-
 // コールバック関数
 void Dice(int num) {
     srand(time(nullptr));
@@ -29,12 +27,10 @@ int main(void) {
 
     std::cin >> num;
 
-    std::function<void(PFunc,int)> setTimeout = [=](PFunc p, int second){
+    std::function<void(int)> setTimeout = [=](int second){
         std::cout << second << "秒待ってください。" << std::endl;
-        std::cout << "サイコロを振っています。" << std::endl;
         // 待機
         Sleep(second * 1000);
-        p(num);
     };
 
     // 0か1を必ず入力させる
@@ -43,11 +39,9 @@ int main(void) {
         std::cin >> num;
     }
 
-    PFunc p;
-    p = Dice;
-
-    // 関数ポインタ, 待機時間[s], 予想された値
-    setTimeout(p, 3);
+    // 待機時間[s], 予想された値
+    setTimeout(3);
+    Dice(num);
 
     return 0;
 }
