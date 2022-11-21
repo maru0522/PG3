@@ -31,6 +31,7 @@ int main(void) {
         std::cout << second << "秒待ってください。" << std::endl;
         // 待機
         Sleep(second * 1000);
+        Dice(num);
     };
 
     // 0か1を必ず入力させる
@@ -41,7 +42,7 @@ int main(void) {
 
     // 待機時間[s], 予想された値
     setTimeout(3);
-    Dice(num);
 
+    system("pause");
     return 0;
 }
