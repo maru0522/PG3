@@ -1,5 +1,5 @@
 #pragma once
-class SceneManager
+class SceneManager final
 {
 public: // ’è‹`
     enum Scene
