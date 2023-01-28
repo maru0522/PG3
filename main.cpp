@@ -22,5 +22,7 @@ int main(void) {
         enemies.at(i).Draw();
     }
 
+    system("pause");
+
     return 0;
 }
