@@ -1,36 +1,25 @@
 #include <stdio.h>
-
-// ˆê”Ê‘ÌŒn
-int General(int hourlyWage, int hours) {
-    return hourlyWage * hours;
-}
-
-// Ä‹A‘ÌŒn
-int Recursive(int defWage, int hours) {
-    if (hours <= 0) {
-        return 0;
-    }
-
-    return defWage + Recursive(defWage * 2 - 50, hours - 1);
-}
+#include "Enemy.h"
+#include <array>
+#include <iostream>
 
 int main(void) {
-    const int hourlyWage = 1072;    // ˆê”Ê‘ÌŒn‚Ì‹‹
-    const int beginWage = 100;      // Ä‹A‘ÌŒn‚Ì‰Šú’À‹à
+    std::array<Enemy, 3> enemies{};
 
-    int workTime = 8; // ˜J“­ŠÔ
+    uint32_t idx{};
 
-
-    // ˜J“­ŠÔ•ª‚Ì‹‹—¿”äŠr
-    printf("ˆê”Ê“I‚È’À‹à‘ÌŒn : %d‰~\n", General(hourlyWage, workTime));
-    printf("Ä‹A“I‚È’À‹à‘ÌŒn : %d‰~\n", Recursive(beginWage, workTime));
-
-    // Œ‹˜_
-    if (General(hourlyWage, workTime) >= Recursive(beginWage, workTime)) {
-        printf("‚æ‚Á‚Äˆê”Ê“I‚È’À‹à‘ÌŒn‚Ì•û‚ª’À‹à‚ª‘½‚¢B\n");
+    for (size_t i = 0; i < enemies.size(); i++) {
+        enemies.at(i).Draw();
     }
-    else {
-        printf("‚æ‚Á‚ÄÄ‹A“I‚È’À‹à‘ÌŒn‚Ì•û‚ª’À‹à‚ª‘½‚¢B\n");
+
+    std::cout << "‰½”Ô–Ú‚Ì“G‚ğ“|‚·‚©0~2‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢" << std::endl;
+    std::cin >> idx;
+
+    Enemy::Kill(enemies.at(idx));
+
+    for (size_t i = 0; i < enemies.size(); i++) {
+        enemies.at(i).Update();
+        enemies.at(i).Draw();
     }
 
     return 0;
