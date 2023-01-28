@@ -1,21 +1,30 @@
 #include "Enemy.h"
 #include <iostream>
 
-bool Enemy::isExist_{ false };
-
-void Enemy::Kill(Enemy instance)
-{
-    instance.isAlive_ = false;
-}
+void (Enemy::* Enemy::spFuncTable[])() = {
+    &Enemy::MeleeAttack,
+    &Enemy::SHOOTAttack,
+    &Enemy::Leave
+};
 
 void Enemy::Update(void)
 {
-    if (!isAlive_) isExist_ = false;
-    if (!isExist_) isAlive_ = false;
+    (this->*spFuncTable[static_cast<size_t>(state_)])();
 }
 
-void Enemy::Draw(void)
+void Enemy::MeleeAttack(void)
 {
-    if (isAlive_) std::cout << "alive!" << std::endl;
-    else std::cout << "dead" << std::endl;
+    std::cout << "i do melee attack" << std::endl;
+    state_ = State::SHOOT;
+}
+
+void Enemy::SHOOTAttack(void)
+{
+    std::cout << "i do shoot attack" << std::endl;
+    state_ = State::LEAVE;
+}
+
+void Enemy::Leave(void)
+{
+    std::cout << "i leave here" << std::endl;
 }

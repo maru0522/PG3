@@ -2,25 +2,17 @@
 #include "Enemy.h"
 #include <array>
 #include <iostream>
+#include <Windows.h>
 
 int main(void) {
-    std::array<Enemy, 3> enemies{};
+    Enemy enemy;
 
-    uint32_t idx{};
-
-    for (size_t i = 0; i < enemies.size(); i++) {
-        enemies.at(i).Draw();
+    for (size_t i = 0; i < 3; i++) {
+        enemy.Update();
+        Sleep(2000);
     }
 
-    std::cout << "‰½”Ô–Ú‚Ì“G‚ð“|‚·‚©0~2‚ÅŽw’è‚µ‚Ä‚­‚¾‚³‚¢" << std::endl;
-    std::cin >> idx;
-
-    Enemy::Kill(enemies.at(idx));
-
-    for (size_t i = 0; i < enemies.size(); i++) {
-        enemies.at(i).Update();
-        enemies.at(i).Draw();
-    }
+    system("pause");
 
     return 0;
 }
